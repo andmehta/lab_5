@@ -35,13 +35,13 @@
     <label>Username: </label>
     <input type="text" name="username"> <br>
     <label>Password: </label>
-    <!--TODO temporarily plaintext change type back to password -->
+    <!-- TODO temporarily plaintext change type back to password -->
     <input type="text" name="password"> <br>
     <input type="submit" value="Log in">
   </form>
 
   <?php
-    //santize input strings to prevent funny business
+    // santize input strings to prevent funny business
     function sanitizeString($var) {
       $var = stripslashes($var);
       $var = strip_tags($var);
@@ -52,38 +52,39 @@
     // TESTING
     var_dump($_POST);
 
-    //get the username in a usable state
+    // get the username in a usable state
     $username = sanitizeString($_POST['username']);
 
-    //Hide the password using hashing and salt
+    // Hide the password using hashing and salt
     $salt1    = "qm&h*";
     $salt2    = "pg!@";
     $password = sanitizeString($_POST['password']);
     $token    = hash('ripemd128', "$salt1$password$salt2");
 
-    //query the database for the matching username and password
+    // query the database for the matching username and password
     $query = "SELECT username
               FROM lab5_users
-              WHERE EXISTS username = $username
-              AND password = $token";
+              WHERE EXISTS username = \'$username\'
+              AND password = \'$token\'";
 
-    //TESTING
+    // TESTING
     echo '<br>---------------------------------------<br>';
     var_dump($username); //should be bsmith
     var_dump($token); //should be 32aa0c466818e1ccba25b8793db98c94
     echo '<br>---------------------------------------<br>';
     var_dump($query);
 
+    // send query to the sql database and return True or False if the
+    // username/password combo exists in the database
     $result = $conn->query($query);
-    //TESTING
+    // TESTING
+    echo '<br>---------------------------------------<br>';
     var_dump($result);
 
-    //$result = "blah";
-    //echo mysqli_num_rows($result);
-    //if the result returns true, then this user exists within the db
+    // if the result returns true, then this user exists within the db
     if(isset($_POST['username'])) {
       if($result) {
-        //TODO navigate to either User or Admin page depeding on result
+        // TODO navigate to either User or Admin page depeding on result
         echo "<p>Success $result</p>";
       }
       else if(isset($_POST['username'])){
