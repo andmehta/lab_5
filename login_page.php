@@ -81,12 +81,14 @@
     //$result = "blah";
     //echo mysqli_num_rows($result);
     //if the result returns true, then this user exists within the db
-    if($result && isset($_POST['username'])) {
-      //TODO navigate to either User or Admin page depeding on result
-      echo "<p>Success $result</p>";
-    }
-    else if(isset($_POST['username'])){
-      echo "<p>Fail</p>";
+    if(isset($_POST['username'])) {
+      if($result) {
+        //TODO navigate to either User or Admin page depeding on result
+        echo "<p>Success $result</p>";
+      }
+      else if(isset($_POST['username'])){
+        echo "<p>Fail</p>";
+      }
     }
    ?>
   <p style="font-style:italic">
