@@ -1,6 +1,6 @@
 <?php
-  $hn = 'localhost'; 
-  $db = 'xyz123'; // your NetID
-  $un = 'xyz123';  // your NetID
-  $pw = 'sosecret'; // your MySQL password on pluto  
+  $hn = 'localhost';
+  $db = 'am3258'; // your NetID
+  $un = 'am3258';  // your NetID
+  $pw = 'sX6RHF2lyCciHEF6'; // your MySQL password on pluto  
 ?>
