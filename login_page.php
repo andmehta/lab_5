@@ -27,9 +27,14 @@
   <h1>Welcome to <span style="font-style:italic; font-weight:bold; color: maroon">
   Great Web Application</span>!</h1>
 
-  <p style="color: red">
+
     <!--Placeholder for error messages-->
-  </p>
+    <?php
+      if(isset($_POST['username']) && isset($_POST['password'])) {
+        echo "<p style=\"color: red\">ERROR username and password combination does not exist</p>";
+      }
+    ?>
+
 
   <form method="post" action="login_page.php">
     <label>Username: </label>
@@ -64,13 +69,13 @@
     // query the database for the matching username and password
     $query = "SELECT username
               FROM lab5_users
-              WHERE EXISTS username = \'$username\'
-              AND password = \'$token\'";
+              WHERE EXISTS username = '$username'
+              AND password = '$token'";
 
     // TESTING
     echo '<br>---------------------------------------<br>';
-    var_dump($username); //should be bsmith
-    var_dump($token); //should be 32aa0c466818e1ccba25b8793db98c94
+    //var_dump($username); //should be bsmith
+    //var_dump($token); //should be 32aa0c466818e1ccba25b8793db98c94
     echo '<br>---------------------------------------<br>';
     var_dump($query);
 
