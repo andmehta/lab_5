@@ -30,6 +30,8 @@
 
     <!--Placeholder for error messages-->
     <?php
+      // TODO needs to possibly be edited to include another parameter if the query was a success? maybe not
+      // as the page should navigate away if succesful?
       if(isset($_POST['username']) && isset($_POST['password'])) {
         echo "<p style=\"color: red\">ERROR username and password combination does not exist</p>";
       }
