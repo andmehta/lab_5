@@ -8,7 +8,11 @@
 <body>
   <!-- php to handle logging out -->
   <?php
+    // destroy session keys
+    session_start();
 
+    session_unset();
+    session_destroy();
   ?>
 
   <h1>Logged Out</h1>
