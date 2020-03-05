@@ -21,6 +21,12 @@
     if($conn->connect_error)
       die($conn->connect_error);
 
+    // TODO figure out how to write this is a way that auto-redirects users that are already logged in
+    if(isset($_SESSION['username']) && isset($_SESSION['type'])) {
+      $location = $_SESSION['type'] == 'user' ? 'Location: user_page.php' : 'Location: admin_page.php';
+      header($location);
+    }
+
       // santize input strings to prevent funny business
       function sanitizeString($var) {
         $var = stripslashes($var);
@@ -39,7 +45,7 @@
       $token    = hash('ripemd128', "$salt1$password$salt2");
 
       // query the database for the matching username and password
-      $query = "SELECT *
+      $query = "SELECT username, type
                 FROM lab5_users
                 WHERE username = '$username'
                 AND password = '$token'";
@@ -55,6 +61,14 @@
         if($result->num_rows == 1) {
           // TODO navigate to either User or Admin page depeding on result
           echo "<p>Success</p>";
+          session_start();
+
+          $row = $result->fetch_array();
+          $_SESSION['currentUser'] = $row["username"];
+          $_SESSION['type'] = $row["type"];
+
+          $location = $_SESSION['type'] == 'user' ? 'Location: user_page.php' : 'Location: admin_page.php';
+          header($location);
         } else {
           echo "<p>Fail</p>";
           $failToLog = True;
