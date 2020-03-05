@@ -21,7 +21,10 @@
 
   <!-- PHP to display admin information -->
   <?php
+    //get the sessions from the login page
     session_start();
+
+    //greet the user personally
     $username = $_SESSION['currentUser'];
     echo "<p>Welcome back $username</p>
           <p>Here's all the orders in the database...</p>";
@@ -35,13 +38,17 @@
       <th>Shipping Method</th>
     </tr>";
 
+    //login to mySQL instance in order to query
     require 'login.php';
     $conn = new mysqli($hn, $un, $pw, $db);
     if($conn->connect_error)
       die($conn->connect_error);
 
+    // query the database for ALL the orders
     $query = "SELECT * FROM lab5_orders";
     $result = $conn->query($query);
+
+    // display each order as well as who ordered it
     while($row = $result->fetch_array() ){
     	$orderID = $row['orderID'];
       $orderUsername = $row['username'];
