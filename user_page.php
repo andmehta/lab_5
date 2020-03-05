@@ -57,8 +57,8 @@
         ";
     }
   ?>
-
 </table>
+<p><a href="logout_page.php">Log out</a></p>
 </body>
 
 </html>
