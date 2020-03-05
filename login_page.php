@@ -60,8 +60,9 @@
           $row = $result->fetch_array();
           $_SESSION['currentUser'] = $row["username"];
           $_SESSION['type'] = $row["type"];
-          var_dump($_SESSION['currentUser']);
-          var_dump($_SESSION['type']);
+
+          $location = $_SESSION['type'] == 'user' ? 'Location: user_page.php' : 'Location: admin_page.php';
+          header($location);
         } else {
           echo "<p>Fail</p>";
           $failToLog = True;
