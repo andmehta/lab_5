@@ -6,15 +6,11 @@
   <title>User Page</title>
   <style>
     td {
-    width: auto;
-    white-space: nowrap;
     border: 1px solid;
     text-align: left;
     padding: 0.5em;
     }
     th {
-    max-width: 100%;
-    white-space: nowrap;
     text-align: left;
     }
     </style>
@@ -30,15 +26,13 @@
     echo "<p>Welcome back $username</p>
           <p>Here's your past orders...</p>";
 
-    echo "
-    <table>
+    echo "<table>
     <tr>
       <th>Order ID</th>
       <th>Order Total</th>
       <th>Order Quantity</th>
       <th>Shipping Method</th>
-    </tr>
-    </table>";
+    </tr>";
 
     require 'login.php';
     $conn = new mysqli($hn, $un, $pw, $db);
@@ -54,17 +48,17 @@
     	$shipping = $row['shipping'];
 
     	echo "
-    	<table>
     		<tr>
     			<td>$orderID</td>
     			<td style =\"text-align: center\">$orderTotal</td>
     			<td>$quantity</td>
     			<td>$shipping</td>
     		</tr>
-    	</table>";
+        ";
     }
   ?>
 
+</table>
 </body>
 
 </html>
