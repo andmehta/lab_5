@@ -21,7 +21,10 @@
 
   <!-- build information for the user page -->
   <?php
+    // get session from login page
     session_start();
+
+    // greet user personally
     $username = $_SESSION['currentUser'];
     echo "<p>Welcome back $username</p>
           <p>Here's your past orders...</p>";
@@ -34,11 +37,13 @@
       <th>Shipping Method</th>
     </tr>";
 
+    // login to mySQL instance in order to query
     require 'login.php';
     $conn = new mysqli($hn, $un, $pw, $db);
     if($conn->connect_error)
       die($conn->connect_error);
 
+    // query the database for all orders made by the user
     $query = "SELECT * FROM lab5_orders WHERE username = '$username'";
     $result = $conn->query($query);
     while($row = $result->fetch_array()){
