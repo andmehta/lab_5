@@ -39,7 +39,7 @@
       $token    = hash('ripemd128', "$salt1$password$salt2");
 
       // query the database for the matching username and password
-      $query = "SELECT *
+      $query = "SELECT username, type
                 FROM lab5_users
                 WHERE username = '$username'
                 AND password = '$token'";
@@ -55,6 +55,13 @@
         if($result->num_rows == 1) {
           // TODO navigate to either User or Admin page depeding on result
           echo "<p>Success</p>";
+          session_start();
+
+          $row = $result->fetch_array();
+          $_SESSION['currentUser'] = $row["username"];
+          $_SESSION['type'] = $row["type"];
+          var_dump($_SESSION['currentUser']);
+          var_dump($_SESSION['type']);
         } else {
           echo "<p>Fail</p>";
           $failToLog = True;
