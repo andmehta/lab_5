@@ -21,6 +21,12 @@
     if($conn->connect_error)
       die($conn->connect_error);
 
+    // TODO figure out how to write this is a way that auto-redirects users that are already logged in
+    if(isset($_SESSION['username']) && isset($_SESSION['type'])) {
+      $location = $_SESSION['type'] == 'user' ? 'Location: user_page.php' : 'Location: admin_page.php';
+      header($location);
+    }
+
       // santize input strings to prevent funny business
       function sanitizeString($var) {
         $var = stripslashes($var);
