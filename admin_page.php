@@ -28,7 +28,7 @@
     // please don't dock points for adding picture I'm just trying to have fun :)
     if(!isset($_SESSION['currentUser']) && !isset($_SESSION['type']) || $_SESSION['type'] != 'admin') {
       echo "<h1>What are you DOING in my PAGE??!?</h1>";
-      echo "<img src=\"Shrek_(character).png\" alt=\"Homer Simpson eating a donut\" width=\"190\" height=\"390\">";
+      echo "<img src=\"Shrek_(character).png\" alt=\"SHREK\" width=\"190\" height=\"390\">";
 
       $error = $_SESSION['type'] != 'admin' && isset($_SESSION['type']) ? "You cannot be here as you are not an admin." : "You are not currently logged in at all";
       echo "<p>$error</p>";
