@@ -21,8 +21,8 @@
     if($conn->connect_error)
       die($conn->connect_error);
 
+    // ensure that sessions haven't already been established, if so, navigate user to their respective page
     session_start();
-    // TODO figure out how to write this is a way that auto-redirects users that are already logged in
     if(isset($_SESSION['currentUser']) && isset($_SESSION['type'])) {
       $location = $_SESSION['type'] == 'user' ? 'Location: user_page.php' : 'Location: admin_page.php';
       header($location);
@@ -58,15 +58,13 @@
 
       //first make sure that the form has actually been submitted
       if(isset($_POST['username'])) {
-        // if the result returns true, then this user exists within the db
+        // if the result number of rows is 1, then this user exists within the db
         if($result->num_rows == 1) {
-          // TODO navigate to either User or Admin page depeding on result
-          echo "<p>Success</p>";
-
           $row = $result->fetch_array();
           $_SESSION['currentUser'] = $row["username"];
           $_SESSION['type'] = $row["type"];
 
+          //using the type returned from the database, navigate user to their respective page
           $location = $_SESSION['type'] == 'user' ? 'Location: user_page.php' : 'Location: admin_page.php';
           header($location);
         } else {
@@ -81,13 +79,9 @@
 
     <!--Placeholder for error messages-->
     <?php
-      // TODO needs to possibly be edited to include another parameter if the query was a success? maybe not
-      // as the page should navigate away if succesful?
-      //$failToLog = True;
       if(isset($_POST['username']) && isset($_POST['password']) && $failToLog === True) {
         echo "<p style=\"color: red\">ERROR username and password combination does not exist</p>";
       }
-      //var_dump($failToLog);
     ?>
 
 
@@ -95,8 +89,7 @@
     <label>Username: </label>
     <input type="text" name="username" value="<?php echo $username;?>"> <br>
     <label>Password: </label>
-    <!-- TODO temporarily plaintext change type back to password -->
-    <input type="text" name="password" value="<?php echo $password;?>"> <br>
+    <input type="password" name="password" value="<?php echo $password;?>"> <br>
     <input type="submit" value="Log in">
   </form>
 
