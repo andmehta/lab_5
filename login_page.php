@@ -32,9 +32,11 @@
     <?php
       // TODO needs to possibly be edited to include another parameter if the query was a success? maybe not
       // as the page should navigate away if succesful?
-      if(isset($_POST['username']) && isset($_POST['password'])) {
+      $failToLog = True;
+      if(isset($_POST['username']) && isset($_POST['password']) && $failToLog === True) {
         echo "<p style=\"color: red\">ERROR username and password combination does not exist</p>";
       }
+      var_dump($failToLog);
     ?>
 
 
@@ -56,9 +58,6 @@
       return $var;
     }
 
-    // TESTING
-    var_dump($_POST);
-
     // get the username in a usable state
     $username = sanitizeString($_POST['username']);
 
@@ -69,33 +68,25 @@
     $token    = hash('ripemd128', "$salt1$password$salt2");
 
     // query the database for the matching username and password
-    $query = "SELECT username
+    $query = "SELECT *
               FROM lab5_users
-              WHERE EXISTS username = '$username'
+              WHERE username = '$username'
               AND password = '$token'";
 
-    // TESTING
-    echo '<br>---------------------------------------<br>';
-    //var_dump($username); //should be bsmith
-    //var_dump($token); //should be 32aa0c466818e1ccba25b8793db98c94
-    echo '<br>---------------------------------------<br>';
-    var_dump($query);
 
     // send query to the sql database and return True or False if the
     // username/password combo exists in the database
     $result = $conn->query($query);
-    // TESTING
-    echo '<br>---------------------------------------<br>';
-    var_dump($result);
 
-    // if the result returns true, then this user exists within the db
+    //first make sure that the form has actually been submitted
     if(isset($_POST['username'])) {
-      if($result) {
+      // if the result returns true, then this user exists within the db
+      if($result->num_rows == 1) {
         // TODO navigate to either User or Admin page depeding on result
-        echo "<p>Success $result</p>";
-      }
-      else if(isset($_POST['username'])){
+        echo "<p>Success</p>";
+      } else {
         echo "<p>Fail</p>";
+        $failToLog = True;
       }
     }
    ?>
